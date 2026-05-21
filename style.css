@@ -92,11 +92,19 @@ textarea {
 }
 
 .logo {
+  display: inline-flex;
+  align-items: center;
   font-size: 1.2rem;
   font-weight: 700;
   letter-spacing: 0.04em;
   color: var(--secondary);
   white-space: nowrap;
+}
+
+.logo-image {
+  display: block;
+  width: auto;
+  height: 36px;
 }
 
 .site-nav {
@@ -735,6 +743,8 @@ textarea {
 }
 
 .testimonial-card {
+  display: flex;
+  flex-direction: column;
   padding: 1.8rem;
   background: rgba(255, 255, 255, 0.92);
   border: 1px solid var(--border);
@@ -742,6 +752,7 @@ textarea {
   box-shadow: var(--shadow-soft);
   position: relative;
   overflow: hidden;
+  min-height: 100%;
 }
 
 .testimonial-card::before {
@@ -789,8 +800,8 @@ textarea {
 }
 
 .testimonial-meta {
-  margin-top: 1.4rem;
-  padding-top: 1.2rem;
+  margin-top: auto;
+  padding-top: 1.4rem;
   border-top: 1px solid rgba(18, 40, 74, 0.08);
 }
 
@@ -939,6 +950,10 @@ textarea {
 .site-footer h3,
 .footer-logo {
   color: #ffffff;
+}
+
+.footer-logo-image {
+  filter: brightness(0) invert(1);
 }
 
 .footer-links {
@@ -1127,6 +1142,10 @@ textarea {
 
   .button {
     width: 100%;
+  }
+
+  .logo-image {
+    height: 30px;
   }
 
   .hero-slider {
