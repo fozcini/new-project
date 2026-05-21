@@ -163,7 +163,7 @@ textarea {
 }
 
 .hero-section {
-  padding: 5.5rem 0 4rem;
+  padding: 4rem 0 3.4rem;
 }
 
 .page-hero {
@@ -181,18 +181,12 @@ textarea {
   pointer-events: none;
 }
 
-.hero-grid {
+.hero-stage {
   position: relative;
-  display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
-  gap: 2rem;
-  align-items: center;
 }
 
 .eyebrow,
-.section-tag,
-.hero-card-label,
-.mini-tag {
+.section-tag {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -222,7 +216,7 @@ textarea {
 
 .hero-copy h1 {
   font-size: clamp(2.6rem, 5vw, 4.6rem);
-  max-width: 12ch;
+  max-width: 11ch;
 }
 
 .page-hero h1 {
@@ -346,51 +340,174 @@ textarea {
   font-size: 0.95rem;
 }
 
-.hero-visual {
+.hero-slider {
   position: relative;
-  min-height: 540px;
-}
-
-.hero-card {
-  position: absolute;
-  border-radius: 30px;
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  min-height: 720px;
+  overflow: hidden;
+  border-radius: 28px;
+  background: #0d1730;
   box-shadow: var(--shadow);
 }
 
-.hero-card-primary {
-  inset: 1rem 2rem 5rem 0;
-  padding: 2rem;
+.hero-slider-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: scale(1.02);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+  pointer-events: none;
+}
+
+.hero-slider-slide.is-active {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+.hero-slider-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-slider-scrim {
+  position: absolute;
+  inset: 0;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(233, 242, 255, 0.95) 100%),
-    linear-gradient(135deg, rgba(13, 91, 215, 0.16), rgba(60, 140, 255, 0.06));
+    linear-gradient(90deg, rgba(6, 16, 35, 0.84) 0%, rgba(6, 16, 35, 0.5) 38%, rgba(6, 16, 35, 0.22) 100%),
+    linear-gradient(180deg, rgba(6, 16, 35, 0.08) 0%, rgba(6, 16, 35, 0.5) 100%);
+  z-index: 1;
 }
 
-.hero-card-primary h2 {
-  margin: 1rem 0;
-  font-size: clamp(1.7rem, 3vw, 2.45rem);
-  line-height: 1.15;
-  color: var(--secondary);
+.hero-copy-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: clamp(1.1rem, 2.6vw, 2rem);
+  padding-bottom: 6.5rem;
 }
 
-.hero-card-primary p,
-.hero-card-floating p {
-  margin: 0;
-  color: var(--text-muted);
-}
-
-.hero-card-floating {
-  right: 0;
-  bottom: 1rem;
-  width: min(290px, 100%);
-  padding: 1.4rem;
-  background: rgba(10, 25, 55, 0.92);
+.hero-copy-overlay .eyebrow {
+  background: rgba(255, 255, 255, 0.14);
   color: #ffffff;
 }
 
-.hero-card-floating p {
-  color: rgba(255, 255, 255, 0.78);
-  margin-top: 0.9rem;
+.hero-copy-main {
+  max-width: 640px;
+}
+
+.hero-copy-overlay h1 {
+  max-width: 10ch;
+  color: #ffffff;
+}
+
+.hero-copy-overlay p {
+  max-width: 45ch;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.hero-copy-overlay .button-secondary {
+  background: rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.26);
+  box-shadow: none;
+  backdrop-filter: blur(12px);
+}
+
+.hero-copy-overlay .button-secondary:hover,
+.hero-copy-overlay .button-secondary:focus-visible {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.22);
+  border-color: rgba(255, 255, 255, 0.34);
+}
+
+.hero-copy-overlay .hero-metrics {
+  margin-top: 2rem;
+}
+
+.hero-copy-overlay .hero-metrics div {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.16);
+  box-shadow: none;
+  backdrop-filter: blur(14px);
+}
+
+.hero-copy-overlay .hero-metrics strong,
+.hero-copy-overlay .hero-metrics span {
+  color: #ffffff;
+}
+
+.hero-copy-overlay .hero-metrics span {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.hero-slider-controls {
+  position: absolute;
+  left: 1.1rem;
+  right: 1.1rem;
+  bottom: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  z-index: 2;
+}
+
+.hero-slider-dots {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.55rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(12px);
+}
+
+.hero-slider-dot,
+.hero-slider-button {
+  border: 0;
+  cursor: pointer;
+}
+
+.hero-slider-dot {
+  width: 10px;
+  height: 10px;
+  padding: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  transition: transform 0.25s ease, background-color 0.25s ease;
+}
+
+.hero-slider-dot.is-active {
+  background: #ffffff;
+  transform: scale(1.15);
+}
+
+.hero-slider-button {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+  font-size: 1.45rem;
+  line-height: 1;
+  backdrop-filter: blur(12px);
+  transition: transform 0.25s ease, background-color 0.25s ease;
+}
+
+.hero-slider-button:hover,
+.hero-slider-button:focus-visible,
+.hero-slider-dot:hover,
+.hero-slider-dot:focus-visible {
+  transform: translateY(-1px);
+}
+
+.hero-slider-button:hover,
+.hero-slider-button:focus-visible {
+  background: rgba(255, 255, 255, 0.22);
 }
 
 /* Shared layout sections */
@@ -910,15 +1027,14 @@ textarea {
   }
 
   .trust-layout,
-  .hero-grid,
   .two-column-grid,
   .faq-shell,
   .contact-layout {
     grid-template-columns: 1fr;
   }
 
-  .hero-visual {
-    min-height: 460px;
+  .hero-slider {
+    min-height: 700px;
   }
 }
 
@@ -972,25 +1088,13 @@ textarea {
     grid-template-columns: 1fr;
   }
 
-  .hero-visual {
-    min-height: auto;
-    display: grid;
-    gap: 1rem;
+  .hero-copy-overlay {
+    padding: 1rem;
+    padding-bottom: 6rem;
   }
 
-  .hero-card {
-    position: relative;
-  }
-
-  .hero-card-primary {
-    inset: auto;
-  }
-
-  .hero-card-floating {
-    left: auto;
-    right: auto;
-    bottom: auto;
-    width: 100%;
+  .hero-slider {
+    min-height: 820px;
   }
 
   .cta-panel {
@@ -1001,7 +1105,7 @@ textarea {
 
 @media (max-width: 640px) {
   .hero-section {
-    padding-top: 4.5rem;
+    padding-top: 3.4rem;
   }
 
   .section,
@@ -1025,16 +1129,28 @@ textarea {
     width: 100%;
   }
 
-  .hero-visual {
-    min-height: auto;
+  .hero-slider {
+    min-height: 860px;
   }
 
-  .hero-card-primary {
-    padding: 1.6rem;
+  .hero-copy-overlay {
+    padding: 0.8rem;
+    padding-bottom: 5.9rem;
   }
 
-  .hero-card-primary h2 {
-    font-size: 1.8rem;
+  .hero-copy-overlay h1 {
+    font-size: clamp(2.2rem, 7vw, 3.4rem);
+  }
+
+  .hero-slider-controls {
+    left: 0.8rem;
+    right: 0.8rem;
+    bottom: 0.8rem;
+  }
+
+  .hero-slider-button {
+    width: 42px;
+    height: 42px;
   }
 
   .info-card,

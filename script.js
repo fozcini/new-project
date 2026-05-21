@@ -6,6 +6,11 @@ const navToggle = document.querySelector(".nav-toggle");
 const navMenu = document.querySelector(".site-nav");
 const navLinks = document.querySelectorAll(".site-nav a");
 const revealElements = document.querySelectorAll(".reveal");
+const heroSlider = document.querySelector(".hero-slider");
+const heroSlides = document.querySelectorAll(".hero-slider-slide");
+const heroDots = document.querySelectorAll(".hero-slider-dot");
+const heroPrevButton = document.querySelector(".hero-slider-prev");
+const heroNextButton = document.querySelector(".hero-slider-next");
 
 if (header) {
   const updateHeaderState = () => {
@@ -79,4 +84,65 @@ if (revealElements.length > 0) {
       revealObserver.observe(element);
     });
   }
+}
+
+// Ana sayfa gorsel slideri
+if (heroSlider && heroSlides.length > 1) {
+  let activeSlideIndex = 0;
+  let autoSlideTimerId;
+
+  const setActiveSlide = (nextIndex) => {
+    activeSlideIndex = (nextIndex + heroSlides.length) % heroSlides.length;
+
+    heroSlides.forEach((slide, index) => {
+      slide.classList.toggle("is-active", index === activeSlideIndex);
+    });
+
+    heroDots.forEach((dot, index) => {
+      dot.classList.toggle("is-active", index === activeSlideIndex);
+    });
+  };
+
+  const startAutoSlide = () => {
+    autoSlideTimerId = window.setInterval(() => {
+      setActiveSlide(activeSlideIndex + 1);
+    }, 5000);
+  };
+
+  const stopAutoSlide = () => {
+    window.clearInterval(autoSlideTimerId);
+  };
+
+  if (heroPrevButton) {
+    heroPrevButton.addEventListener("click", () => {
+      stopAutoSlide();
+      setActiveSlide(activeSlideIndex - 1);
+      startAutoSlide();
+    });
+  }
+
+  if (heroNextButton) {
+    heroNextButton.addEventListener("click", () => {
+      stopAutoSlide();
+      setActiveSlide(activeSlideIndex + 1);
+      startAutoSlide();
+    });
+  }
+
+  heroDots.forEach((dot) => {
+    dot.addEventListener("click", () => {
+      const nextIndex = Number(dot.dataset.slide);
+
+      stopAutoSlide();
+      setActiveSlide(nextIndex);
+      startAutoSlide();
+    });
+  });
+
+  heroSlider.addEventListener("mouseenter", stopAutoSlide);
+  heroSlider.addEventListener("mouseleave", startAutoSlide);
+  heroSlider.addEventListener("focusin", stopAutoSlide);
+  heroSlider.addEventListener("focusout", startAutoSlide);
+
+  startAutoSlide();
 }
