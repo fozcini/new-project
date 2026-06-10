@@ -11,6 +11,7 @@ const heroSlides = document.querySelectorAll(".hero-slider-slide");
 const heroDots = document.querySelectorAll(".hero-slider-dot");
 const heroPrevButton = document.querySelector(".hero-slider-prev");
 const heroNextButton = document.querySelector(".hero-slider-next");
+const productCarousels = document.querySelectorAll("[data-product-carousel]");
 
 if (header) {
   const updateHeaderState = () => {
@@ -146,3 +147,49 @@ if (heroSlider && heroSlides.length > 1) {
 
   startAutoSlide();
 }
+
+// Urun detay sayfasi carousel kontrolleri
+productCarousels.forEach((carousel) => {
+  const slides = carousel.querySelectorAll(".product-carousel-slide");
+  const dots = carousel.querySelectorAll("[data-carousel-dot]");
+  const prevButton = carousel.querySelector("[data-carousel-prev]");
+  const nextButton = carousel.querySelector("[data-carousel-next]");
+
+  if (slides.length <= 1) {
+    return;
+  }
+
+  let activeProductSlideIndex = 0;
+
+  const setActiveProductSlide = (nextIndex) => {
+    activeProductSlideIndex = (nextIndex + slides.length) % slides.length;
+
+    slides.forEach((slide, index) => {
+      const isActive = index === activeProductSlideIndex;
+      slide.classList.toggle("is-active", isActive);
+      slide.setAttribute("aria-hidden", String(!isActive));
+    });
+
+    dots.forEach((dot, index) => {
+      const isActive = index === activeProductSlideIndex;
+      dot.classList.toggle("is-active", isActive);
+      dot.setAttribute("aria-current", isActive ? "true" : "false");
+    });
+  };
+
+  prevButton?.addEventListener("click", () => {
+    setActiveProductSlide(activeProductSlideIndex - 1);
+  });
+
+  nextButton?.addEventListener("click", () => {
+    setActiveProductSlide(activeProductSlideIndex + 1);
+  });
+
+  dots.forEach((dot) => {
+    dot.addEventListener("click", () => {
+      setActiveProductSlide(Number(dot.dataset.carouselDot));
+    });
+  });
+
+  setActiveProductSlide(0);
+});
